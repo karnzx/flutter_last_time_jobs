@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: FirstScreen.routeName,
       routes: {
-        '/': (context) => const FirstScreen(),
-        '/second': (context) => const SecondScreen(),
+        FirstScreen.routeName: (context) => const FirstScreen(),
+        SecondScreen.routeName: (context) => const SecondScreen(),
       },
     );
   }

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class SecondScreen extends StatelessWidget {
   const SecondScreen({Key? key}) : super(key: key);
 
+  static const routeName = '/secondScreen';
+
   @override
   Widget build(BuildContext context) {
+    final arg = ModalRoute.of(context)?.settings.arguments ?? 'no arguments';
+    print(arg);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Second Screen'),
@@ -13,8 +17,6 @@ class SecondScreen extends StatelessWidget {
         child: ElevatedButton(
           // Within the SecondScreen widget
           onPressed: () {
-            // Navigate back to the first screen by popping the current route
-            // off the stack.
             Navigator.pop(context);
           },
           child: const Text('Go back!'),
