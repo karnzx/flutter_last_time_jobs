@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Screens/first_screen.dart';
 import 'Screens/second_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  // var box = await Hive.openBox('settings');
+  // print('${box.length}, ${box.isNotEmpty}');
+  // for (var i in box.keys) {
+  //   print('Name: ${box.get(i)}');
+  // }
   runApp(MyApp());
 }
 
