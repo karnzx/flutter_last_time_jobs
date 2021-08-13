@@ -310,7 +310,6 @@ class _FirstScreenState extends State<FirstScreen> {
                 value: _selectedCategory,
                 icon: const Icon(Icons.arrow_drop_down),
                 iconSize: 24,
-                elevation: 16,
                 style: const TextStyle(color: Colors.black),
                 onChanged: (String? newValue) {
                   setState(() {
@@ -321,7 +320,10 @@ class _FirstScreenState extends State<FirstScreen> {
                     categoryItems.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Text(
+                      value,
+                      style: TextStyle(fontSize: 20),
+                    ),
                   );
                 }).toList(),
               ),
