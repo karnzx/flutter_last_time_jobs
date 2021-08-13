@@ -27,21 +27,11 @@ class _FirstScreenState extends State<FirstScreen> {
           title: const Text('Last Time History'),
         ),
         body: Center(
-            child: Column(
-          children: [
-            Text('hell'),
-          ],
-        )
-            // child: ElevatedButton(
-            //   // Within the `FirstScreen` widget
-            //   onPressed: () {
-            //     // Navigate to the second screen using a named route.
-            //     Navigator.pushNamed(context, SecondScreen.routeName,
-            //         arguments: 'args');
-            //   },
-            //   child: const Text('Launch screen'),
-            // ),
-            ),
+            child: ValueListenableBuilder<Box<LastTime>>(
+          valueListenable: Hive.box<LastTime>('lastTimes').listenable(),
+          builder: (context, box, widget) => lasTimeList(
+              box.values.toList().reversed.toList().cast<LastTime>()),
+        )),
         floatingActionButton: FloatingActionButton(
           elevation: 10,
           tooltip: 'add',
@@ -58,6 +48,59 @@ class _FirstScreenState extends State<FirstScreen> {
   }
 }
 
+Widget lasTimeList(List<LastTime> lastTimes) {
+  if (lastTimes.isEmpty) {
+    return Text(
+      'No History yet',
+      style: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 30, color: Colors.red),
+    );
+  } else {
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 10),
+        Text('History count : ${lastTimes.length} items',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.lightBlue)),
+        SizedBox(height: 30),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: lastTimes.length,
+            itemBuilder: (context, index) {
+              final lastTime = lastTimes[index];
+              return Card(
+                  child: ListTile(
+                leading: Container(
+                  width: 48,
+                  height: 48,
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  alignment: Alignment.center,
+                  child: const Icon(Icons.done),
+                ),
+                title: Text(
+                  lastTime.job,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                subtitle: Text(lastTime.category),
+                trailing: IconButton(
+                  onPressed: () {
+                    print('clicked');
+                  },
+                  icon: Icon(Icons.more_vert),
+                ),
+                onTap: () {},
+              ));
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 Future addLastTime(String job, String category) async {
   final lastTime = LastTime()
     ..job = job
@@ -66,4 +109,5 @@ Future addLastTime(String job, String category) async {
 
   final box = Hive.box<LastTime>('lastTimes');
   box.add(lastTime);
+  print('$box, $lastTime');
 }

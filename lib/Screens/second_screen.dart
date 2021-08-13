@@ -130,11 +130,9 @@ class _SecondScreenState extends State<SecondScreen> {
       child: Text(text),
       onPressed: () async {
         final job = jobController.text;
-        print(job);
-        print(_selectedCategory);
-        // widget.onFinish(
-        //   job,
-        // );
+        print('job name $job');
+        print('cateogry $_selectedCategory');
+        widget.onFinish(job, _selectedCategory);
 
         Navigator.of(context).pop();
       },
