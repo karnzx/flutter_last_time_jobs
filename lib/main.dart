@@ -15,7 +15,7 @@ void main() async {
   //   print('Name: ${box.get(i)}');
   // }
   Hive.registerAdapter(LastTimeAdapter());
-  await Hive.openBox<LastTime>("last_times");
+  await Hive.openBox<LastTime>("lastTimes");
   runApp(MyApp());
 }
 

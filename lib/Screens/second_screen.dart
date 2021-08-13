@@ -12,8 +12,11 @@ class SecondScreen extends StatefulWidget {
 class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
-    // final arg = ModalRoute.of(context)?.settings.arguments ?? 'no arguments';
-    // print(arg);
+    final args = ModalRoute.of(context)?.settings.arguments as Map;
+    final onFinish = args['onFinish'];
+    final isEditing = args['lastTime'] != null;
+    final title = isEditing ? 'Edit LastTime' : 'Add LasTime';
+    print('$onFinish \n $title');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Screen'),
