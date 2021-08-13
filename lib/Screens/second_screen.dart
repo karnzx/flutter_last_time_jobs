@@ -41,6 +41,7 @@ class _SecondScreenState extends State<SecondScreen> {
         ),
       ),
       actions: <Widget>[
+        cancelButton(context),
         addButton(context, isEditing: isEditing),
       ],
     );
@@ -62,10 +63,22 @@ class _SecondScreenState extends State<SecondScreen> {
     );
   }
 
+  Widget cancelButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      child: Text('Cancel'),
+      style: ElevatedButton.styleFrom(
+          primary: Colors.black.withOpacity(0.8),
+          textStyle: TextStyle(fontWeight: FontWeight.bold)),
+    );
+  }
+
   Widget addButton(BuildContext context, {required bool isEditing}) {
     final text = isEditing ? 'Save' : 'Add';
 
-    return TextButton(
+    return ElevatedButton(
       child: Text(text),
       onPressed: () async {
         final job = jobController.text;
@@ -76,6 +89,9 @@ class _SecondScreenState extends State<SecondScreen> {
 
         Navigator.of(context).pop();
       },
+      style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          textStyle: TextStyle(fontWeight: FontWeight.bold)),
     );
   }
 }
