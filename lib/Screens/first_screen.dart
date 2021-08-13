@@ -106,6 +106,16 @@ Widget lasTimeList(List<LastTime> lastTimes) {
                       color: Colors.white,
                     ),
                   ),
+                  trailing: IconButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => deleteLastTime(context, lastTime),
+                    ),
+                    icon: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                    ),
+                  ),
                   subtitle: Text(lastTime.category,
                       style: TextStyle(
                         color: Colors.white70,
@@ -122,6 +132,34 @@ Widget lasTimeList(List<LastTime> lastTimes) {
       ],
     );
   }
+}
+
+Widget deleteLastTime(BuildContext context, LastTime lastTime) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    title: Text('Delete lasTime | Are you Sure?'),
+    actions: [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text('No'),
+        style: ElevatedButton.styleFrom(
+            primary: Colors.blueGrey,
+            textStyle: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          lastTime.delete();
+          Navigator.of(context).pop();
+        },
+        child: Text('Yes'),
+        style: ElevatedButton.styleFrom(
+            primary: Colors.red,
+            textStyle: TextStyle(fontWeight: FontWeight.bold)),
+      )
+    ],
+  );
 }
 
 Future addLastTime(String job, String category) async {
