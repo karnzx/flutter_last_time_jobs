@@ -18,6 +18,21 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   final jobController = TextEditingController();
+  final List<String> categoryItems = [
+    'Work',
+    'Home Work',
+    'Cooking',
+    'Bed Room',
+    'Bath Room',
+    'Other',
+  ];
+  late String _selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCategory = categoryItems.elementAt(0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +52,8 @@ class _SecondScreenState extends State<SecondScreen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             jobField(),
+            SizedBox(height: 10),
+            categoryDropdown(),
           ],
         ),
       ),
@@ -45,6 +62,37 @@ class _SecondScreenState extends State<SecondScreen> {
         addButton(context, isEditing: isEditing),
       ],
     );
+  }
+
+  Widget categoryDropdown() {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const Text('Category', style: TextStyle(fontWeight: FontWeight.bold)),
+          DropdownButton(
+            isExpanded: true,
+            value: _selectedCategory,
+            icon: const Icon(Icons.arrow_drop_down),
+            iconSize: 24,
+            elevation: 16,
+            underline: Container(
+              height: 2,
+              color: Colors.brown,
+            ),
+            style: const TextStyle(color: Colors.black),
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedCategory = newValue!;
+              });
+            },
+            items: categoryItems.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ]);
   }
 
   Widget jobField() {
@@ -83,6 +131,7 @@ class _SecondScreenState extends State<SecondScreen> {
       onPressed: () async {
         final job = jobController.text;
         print(job);
+        print(_selectedCategory);
         // widget.onFinish(
         //   job,
         // );
