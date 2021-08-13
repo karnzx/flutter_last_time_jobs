@@ -117,12 +117,29 @@ Widget lasTimeList(List<LastTime> lastTimes) {
                       color: Colors.white,
                     ),
                   ),
-                  subtitle: Text(
-                      '${lastTime.category} -- ${DateFormat.yMd().format(lastTime.timeStamp.last)}',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 15,
-                      )),
+                  subtitle: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: '${lastTime.category}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white70,
+                                fontSize: 17)),
+                        TextSpan(
+                            text: ' -- ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white70)),
+                        TextSpan(
+                            text:
+                                '${DateFormat.yMd().format(lastTime.timeStamp.last)}',
+                            style:
+                                TextStyle(color: Colors.white70, fontSize: 17)),
+                      ],
+                    ),
+                  ),
                   onTap: () => showDialog(
                     context: context,
                     builder: (context) => detailDialog(context, lastTime),
@@ -140,17 +157,28 @@ Widget lasTimeList(List<LastTime> lastTimes) {
 Widget detailDialog(BuildContext context, LastTime lastTime) {
   return AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-    title: Text(lastTime.job),
+    title: Text(lastTime.job,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
     content: SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(lastTime.category),
-              SizedBox(width: 10),
-              Text(lastTime.timeStamp.last.toString())
-            ],
-          )
+          RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: 'Category : ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                TextSpan(
+                    text: '${lastTime.category}',
+                    style: TextStyle(fontSize: 20)),
+              ],
+            ),
+          ),
+          SizedBox(width: 20),
+          Text(lastTime.timeStamp.length.toString()),
         ],
       ),
     ),
