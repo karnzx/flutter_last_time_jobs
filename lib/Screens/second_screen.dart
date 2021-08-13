@@ -45,7 +45,13 @@ class _SecondScreenState extends State<SecondScreen> {
     final isEditing = widget.lastTime != null;
     final title = isEditing ? 'Edit LastTime' : 'Add LastTime';
     return AlertDialog(
-      title: Text(title),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+      buttonPadding: const EdgeInsets.only(right: 24),
       elevation: 24.0,
       content: Form(
         child: Column(
@@ -69,28 +75,33 @@ class _SecondScreenState extends State<SecondScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           const Text('Category', style: TextStyle(fontWeight: FontWeight.bold)),
-          DropdownButton(
-            isExpanded: true,
-            value: _selectedCategory,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            elevation: 16,
-            underline: Container(
-              height: 2,
-              color: Colors.brown,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.deepPurple)),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                isExpanded: true,
+                value: _selectedCategory,
+                icon: const Icon(Icons.arrow_drop_down),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedCategory = newValue!;
+                  });
+                },
+                items:
+                    categoryItems.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
             ),
-            style: const TextStyle(color: Colors.black),
-            onChanged: (String? newValue) {
-              setState(() {
-                _selectedCategory = newValue!;
-              });
-            },
-            items: categoryItems.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
           ),
         ]);
   }

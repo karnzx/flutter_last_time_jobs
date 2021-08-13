@@ -72,27 +72,30 @@ Widget lasTimeList(List<LastTime> lastTimes) {
             itemBuilder: (context, index) {
               final lastTime = lastTimes[index];
               return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   child: ListTile(
-                leading: Container(
-                  width: 48,
-                  height: 48,
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  alignment: Alignment.center,
-                  child: const Icon(Icons.done),
-                ),
-                title: Text(
-                  lastTime.job,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                subtitle: Text(lastTime.category),
-                trailing: IconButton(
-                  onPressed: () {
-                    print('clicked');
-                  },
-                  icon: Icon(Icons.more_vert),
-                ),
-                onTap: () {},
-              ));
+                    leading: Container(
+                      width: 48,
+                      height: 48,
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      alignment: Alignment.center,
+                      child: const Icon(Icons.done),
+                    ),
+                    title: Text(
+                      lastTime.job,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    subtitle: Text(lastTime.category),
+                    trailing: IconButton(
+                      onPressed: () {
+                        print('clicked');
+                      },
+                      icon: Icon(Icons.more_vert),
+                    ),
+                    onTap: () {},
+                  ));
             },
           ),
         ),
