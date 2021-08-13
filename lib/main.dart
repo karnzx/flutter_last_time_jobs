@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive_navigate/models/last_time.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -13,6 +14,8 @@ void main() async {
   // for (var i in box.keys) {
   //   print('Name: ${box.get(i)}');
   // }
+  Hive.registerAdapter(LastTimeAdapter());
+  await Hive.openBox<LastTime>("last_times");
   runApp(MyApp());
 }
 
