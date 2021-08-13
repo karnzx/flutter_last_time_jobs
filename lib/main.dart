@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(title: 'HomePage'),
       initialRoute: FirstScreen.routeName,
       routes: {
-        FirstScreen.routeName: (context) => const FirstScreen(),
-        SecondScreen.routeName: (context) => const SecondScreen(),
+        FirstScreen.routeName: (context) => FirstScreen(),
+        SecondScreen.routeName: (context) => SecondScreen(),
       },
     );
   }

@@ -1,29 +1,58 @@
 import 'package:flutter/material.dart';
-
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'second_screen.dart';
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
+  static const routeName = '/firstScreen';
+
   const FirstScreen({Key? key}) : super(key: key);
 
-  static const routeName = '/firstScreen';
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Screen'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          // Within the `FirstScreen` widget
+        appBar: AppBar(
+          title: const Text('Last Time History'),
+        ),
+        body: Center(
+            child: Column(
+          children: [
+            Text('hell'),
+          ],
+        )
+            // child: ElevatedButton(
+            //   // Within the `FirstScreen` widget
+            //   onPressed: () {
+            //     // Navigate to the second screen using a named route.
+            //     Navigator.pushNamed(context, SecondScreen.routeName,
+            //         arguments: 'args');
+            //   },
+            //   child: const Text('Launch screen'),
+            // ),
+            ),
+        floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          tooltip: 'add',
+          child: Icon(
+            Icons.add,
+            size: 40.0,
+            color: Colors.white,
+          ),
           onPressed: () {
             // Navigate to the second screen using a named route.
-            Navigator.pushNamed(context, SecondScreen.routeName,
-                arguments: 'args');
+            Navigator.pushNamed(context, SecondScreen.routeName);
           },
-          child: const Text('Launch screen'),
-        ),
-      ),
-    );
+        ));
   }
 }

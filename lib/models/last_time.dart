@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'last_time.g.dart';
 
 @HiveType(typeId: 0)
-class LastTime {
+class LastTime extends HiveObject {
   @HiveField(0)
   late String job;
 
