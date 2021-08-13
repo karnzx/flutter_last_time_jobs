@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      // home: MyHomePage(title: 'HomePage'),
       initialRoute: FirstScreen.routeName,
       routes: {
         FirstScreen.routeName: (context) => const FirstScreen(),
@@ -44,39 +45,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _currentIndex = 0;
+  final List<List> _widgetScreens = [
+    // group of screens and its buttons
+    [
+      FirstScreen(),
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'First Screen'),
+    ],
+    [
+      SecondScreen(),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.favorite), label: 'Second Screen'),
+    ]
+  ];
 
-  void _incrementCounter() {
+  void onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+        child: _widgetScreens.elementAt(_currentIndex).elementAt(0),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        fixedColor: Colors.deepPurple,
+        onTap: (index) {
+          onItemTapped(index);
+        },
+        items: List.generate(_widgetScreens.length,
+            (index) => _widgetScreens[index][1] as BottomNavigationBarItem),
+      ),
     );
   }
 }
