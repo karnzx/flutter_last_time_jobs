@@ -110,7 +110,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       onPressed: () => showDialog(
                         context: context,
                         builder: (context) => buildDialog(context,
-                            title: 'Delete lasTime | Are you Sure?',
+                            title: 'Delete lastTime | Are you Sure?',
                             onDone: lastTime.delete),
                       ),
                       icon: Icon(
