@@ -15,6 +15,23 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
+  late String _selectedCategory;
+  final List<String> categoryItems = [
+    'all',
+    'Work',
+    'HomeWork',
+    'Cooking',
+    'Bed Room',
+    'Bath Room',
+    'Other',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCategory = categoryItems.elementAt(0);
+  }
+
   @override
   void dispose() {
     Hive.close();
@@ -27,12 +44,19 @@ class _FirstScreenState extends State<FirstScreen> {
         appBar: AppBar(
           title: const Text('Last Time History'),
         ),
-        body: Center(
-            child: ValueListenableBuilder<Box<LastTime>>(
-          valueListenable: Hive.box<LastTime>('lastTimes').listenable(),
-          builder: (context, box, widget) => lasTimeList(
-              box.values.toList().reversed.toList().cast<LastTime>()),
-        )),
+        body: Column(
+          children: [
+            SizedBox(height: 15),
+            categoryDropdown(),
+            Expanded(
+              child: ValueListenableBuilder<Box<LastTime>>(
+                valueListenable: Hive.box<LastTime>('lastTimes').listenable(),
+                builder: (context, box, widget) =>
+                    lastTimeList(box.values.toList().cast<LastTime>()),
+              ),
+            ),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           elevation: 10,
           tooltip: 'add',
@@ -48,18 +72,26 @@ class _FirstScreenState extends State<FirstScreen> {
         ));
   }
 
-  Widget lasTimeList(List<LastTime> lastTimes) {
+  Widget lastTimeList(List<LastTime> lastTimes) {
+    var items = lastTimes;
+    if (_selectedCategory != categoryItems.first) {
+      items = lastTimes
+          .where((lastTime) => lastTime.category == _selectedCategory)
+          .toList();
+    }
     if (lastTimes.isEmpty) {
-      return Text(
-        'No History yet',
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 30, color: Colors.red),
+      return Center(
+        child: Text(
+          'No History yet',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 30, color: Colors.red),
+        ),
       );
     } else {
       return Column(
         children: <Widget>[
           SizedBox(height: 10),
-          Text('History count : ${lastTimes.length} items',
+          Text('All items count : ${lastTimes.length} items',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
@@ -68,9 +100,9 @@ class _FirstScreenState extends State<FirstScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(10),
-              itemCount: lastTimes.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
-                final lastTime = lastTimes[index];
+                final lastTime = items.reversed.elementAt(index);
                 return Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
@@ -258,5 +290,43 @@ class _FirstScreenState extends State<FirstScreen> {
     final box = Hive.box<LastTime>('lastTimes');
     box.add(lastTime);
     print('$box, $lastTime');
+  }
+
+  Widget categoryDropdown() {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const Text('Category',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          Container(
+            margin: const EdgeInsets.all(15),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.deepPurple)),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                isExpanded: true,
+                value: _selectedCategory,
+                icon: const Icon(Icons.arrow_drop_down),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedCategory = newValue!;
+                  });
+                },
+                items:
+                    categoryItems.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ]);
   }
 }
