@@ -109,7 +109,9 @@ class _FirstScreenState extends State<FirstScreen> {
                     trailing: IconButton(
                       onPressed: () => showDialog(
                         context: context,
-                        builder: (context) => deleteDialog(context, lastTime),
+                        builder: (context) => buildDialog(context,
+                            title: 'Delete lasTime | Are you Sure?',
+                            onDone: lastTime.delete),
                       ),
                       icon: Icon(
                         Icons.delete_forever,
@@ -195,11 +197,14 @@ class _FirstScreenState extends State<FirstScreen> {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () {
-            lastTime.timeStamp.add(DateTime.now());
-            lastTime.save();
-            Navigator.of(context).pop();
-          },
+          onPressed: () => showDialog(
+              context: context,
+              builder: (context) =>
+                  buildDialog(context, title: 'Are you sure?', onDone: () {
+                    lastTime.timeStamp.add(DateTime.now());
+                    lastTime.save();
+                    Navigator.of(context).pop();
+                  })),
           child: Align(
               alignment: Alignment.bottomCenter,
               child: Text(
@@ -214,10 +219,11 @@ class _FirstScreenState extends State<FirstScreen> {
     );
   }
 
-  Widget deleteDialog(BuildContext context, LastTime lastTime) {
+  Widget buildDialog(BuildContext context,
+      {required String title, required Function onDone}) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      title: Text('Delete lasTime | Are you Sure?'),
+      title: Text(title),
       actions: [
         ElevatedButton(
           onPressed: () {
@@ -230,7 +236,7 @@ class _FirstScreenState extends State<FirstScreen> {
         ),
         ElevatedButton(
           onPressed: () {
-            lastTime.delete();
+            onDone();
             Navigator.of(context).pop();
           },
           child: Text('Yes'),
@@ -250,7 +256,7 @@ class _FirstScreenState extends State<FirstScreen> {
       ..timeStamp.add(DateTime.now());
 
     final box = Hive.box<LastTime>('lastTimes');
-    box.put(job, lastTime);
+    box.add(lastTime);
     print('$box, $lastTime');
   }
 }
