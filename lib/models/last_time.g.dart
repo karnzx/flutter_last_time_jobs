@@ -19,19 +19,22 @@ class LastTimeAdapter extends TypeAdapter<LastTime> {
     return LastTime()
       ..job = fields[0] as String
       ..category = fields[1] as String
-      ..createdDate = fields[2] as DateTime;
+      ..createdDate = fields[2] as DateTime
+      ..timeStamp = (fields[3] as List).cast<DateTime>();
   }
 
   @override
   void write(BinaryWriter writer, LastTime obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.job)
       ..writeByte(1)
       ..write(obj.category)
       ..writeByte(2)
-      ..write(obj.createdDate);
+      ..write(obj.createdDate)
+      ..writeByte(3)
+      ..write(obj.timeStamp);
   }
 
   @override

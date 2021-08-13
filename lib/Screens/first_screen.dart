@@ -3,6 +3,7 @@ import 'package:flutter_hive_navigate/models/last_time.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'second_screen.dart';
+import 'package:intl/intl.dart';
 
 class FirstScreen extends StatefulWidget {
   static const routeName = '/firstScreen';
@@ -109,21 +110,23 @@ Widget lasTimeList(List<LastTime> lastTimes) {
                   trailing: IconButton(
                     onPressed: () => showDialog(
                       context: context,
-                      builder: (context) => deleteLastTime(context, lastTime),
+                      builder: (context) => deleteDialog(context, lastTime),
                     ),
                     icon: Icon(
                       Icons.delete_forever,
                       color: Colors.white,
                     ),
                   ),
-                  subtitle: Text(lastTime.category,
+                  subtitle: Text(
+                      '${lastTime.category} -- ${DateFormat.yMd().format(lastTime.timeStamp.last)}',
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 15,
                       )),
-                  onTap: () {
-                    print('tile clicked');
-                  },
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => detailDialog(context, lastTime),
+                  ),
                 ),
               );
             },
@@ -134,7 +137,43 @@ Widget lasTimeList(List<LastTime> lastTimes) {
   }
 }
 
-Widget deleteLastTime(BuildContext context, LastTime lastTime) {
+Widget detailDialog(BuildContext context, LastTime lastTime) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    title: Text(lastTime.job),
+    content: SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(lastTime.category),
+              SizedBox(width: 10),
+              Text(lastTime.timeStamp.last.toString())
+            ],
+          )
+        ],
+      ),
+    ),
+    actions: [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              'Stamp Time',
+              textAlign: TextAlign.center,
+            )),
+        style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+            textStyle: TextStyle(fontWeight: FontWeight.bold)),
+      )
+    ],
+  );
+}
+
+Widget deleteDialog(BuildContext context, LastTime lastTime) {
   return AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     title: Text('Delete lasTime | Are you Sure?'),
@@ -166,9 +205,10 @@ Future addLastTime(String job, String category) async {
   final lastTime = LastTime()
     ..job = job
     ..category = category
-    ..createdDate = DateTime.now();
+    ..createdDate = DateTime.now()
+    ..timeStamp.add(DateTime.now());
 
   final box = Hive.box<LastTime>('lastTimes');
-  box.add(lastTime);
+  box.put(job, lastTime);
   print('$box, $lastTime');
 }

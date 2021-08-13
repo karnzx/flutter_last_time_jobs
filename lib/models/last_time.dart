@@ -12,4 +12,7 @@ class LastTime extends HiveObject {
 
   @HiveField(2)
   late DateTime createdDate;
+
+  @HiveField(3)
+  List<DateTime> timeStamp = [];
 }
