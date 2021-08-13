@@ -20,7 +20,7 @@ class _SecondScreenState extends State<SecondScreen> {
   final jobController = TextEditingController();
   final List<String> categoryItems = [
     'Work',
-    'Home Work',
+    'HomeWork',
     'Cooking',
     'Bed Room',
     'Bath Room',
