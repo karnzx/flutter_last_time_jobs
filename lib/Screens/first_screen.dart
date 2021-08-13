@@ -50,11 +50,10 @@ class _FirstScreenState extends State<FirstScreen> {
             size: 40.0,
             color: Colors.white,
           ),
-          onPressed: () {
-            // Navigate to the second screen using a named route.
-            Navigator.pushNamed(context, SecondScreen.routeName,
-                arguments: {'onFinish': addLastTime});
-          },
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => SecondScreen(onFinish: addLastTime),
+          ),
         ));
   }
 }

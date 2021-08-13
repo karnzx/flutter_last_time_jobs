@@ -32,57 +32,57 @@ class MyApp extends StatelessWidget {
       initialRoute: FirstScreen.routeName,
       routes: {
         FirstScreen.routeName: (context) => FirstScreen(),
-        SecondScreen.routeName: (context) => SecondScreen(),
+        // SecondScreen.routeName: (context) => SecondScreen(),
       },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+// class MyHomePage extends StatefulWidget {
+//   MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  final String title;
+//   final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+//   @override
+//   _MyHomePageState createState() => _MyHomePageState();
+// }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
-  final List<List> _widgetScreens = [
-    // group of screens and its buttons
-    [
-      FirstScreen(),
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'First Screen'),
-    ],
-    [
-      SecondScreen(),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.favorite), label: 'Second Screen'),
-    ]
-  ];
+// class _MyHomePageState extends State<MyHomePage> {
+//   int _currentIndex = 0;
+//   final List<List> _widgetScreens = [
+//     // group of screens and its buttons
+//     [
+//       FirstScreen(),
+//       BottomNavigationBarItem(icon: Icon(Icons.home), label: 'First Screen'),
+//     ],
+//     [
+//       SecondScreen(),
+//       BottomNavigationBarItem(
+//           icon: Icon(Icons.favorite), label: 'Second Screen'),
+//     ]
+//   ];
 
-  void onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+//   void onItemTapped(int index) {
+//     setState(() {
+//       _currentIndex = index;
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetScreens.elementAt(_currentIndex).elementAt(0),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        fixedColor: Colors.deepPurple,
-        onTap: (index) {
-          onItemTapped(index);
-        },
-        items: List.generate(_widgetScreens.length,
-            (index) => _widgetScreens[index][1] as BottomNavigationBarItem),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: _widgetScreens.elementAt(_currentIndex).elementAt(0),
+//       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         currentIndex: _currentIndex,
+//         fixedColor: Colors.deepPurple,
+//         onTap: (index) {
+//           onItemTapped(index);
+//         },
+//         items: List.generate(_widgetScreens.length,
+//             (index) => _widgetScreens[index][1] as BottomNavigationBarItem),
+//       ),
+//     );
+//   }
+// }
