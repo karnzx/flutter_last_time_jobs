@@ -71,30 +71,82 @@ Widget lasTimeList(List<LastTime> lastTimes) {
             itemCount: lastTimes.length,
             itemBuilder: (context, index) {
               final lastTime = lastTimes[index];
-              return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: ListTile(
-                    leading: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.done),
-                    ),
-                    title: Text(
-                      lastTime.job,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    subtitle: Text(lastTime.category),
-                    trailing: IconButton(
-                      onPressed: () {
-                        print('clicked');
-                      },
-                      icon: Icon(Icons.more_vert),
-                    ),
-                    onTap: () {},
+              return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color(0xFF0D47A1),
+                          Color(0xFF1976D2),
+                          Color(0xFF42A5F5),
+                        ],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 5,
+                        )
+                      ]),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Container(
+                          width: 48,
+                          height: 48,
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          alignment: Alignment.center,
+                          child: const Icon(Icons.done, color: Colors.white),
+                        ),
+                        title: Text(
+                          lastTime.job,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            color: Colors.white,
+                          ),
+                        ),
+                        subtitle: Text(lastTime.category,
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 15,
+                            )),
+                        trailing: IconButton(
+                          onPressed: () {
+                            print('three dot clicked');
+                          },
+                          icon: Icon(Icons.more_vert, color: Colors.white70),
+                        ),
+                        onTap: () {
+                          print('tile clicked');
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              textStyle: const TextStyle(fontSize: 16),
+                            ),
+                            child: const Text('Edit'),
+                            onPressed: () {},
+                          ),
+                          const SizedBox(width: 8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              textStyle: const TextStyle(fontSize: 16),
+                            ),
+                            child: const Text('Remove'),
+                            onPressed: () {},
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      )
+                    ],
                   ));
             },
           ),
