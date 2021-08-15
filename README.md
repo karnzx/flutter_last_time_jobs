@@ -29,7 +29,8 @@ feature (history is LastTime class in app)
 git clone https://github.com/karnzx/flutter_hive_navigate.git
 ```
 
-3. Run the app with Android Studio or Visual Studio. Or the command line.```
+3. Run the app with Android Studio or Visual Studio. Or the command line.
+```
 flutter pub get
 flutter run
 ```
